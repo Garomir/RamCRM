@@ -3,28 +3,41 @@ package ru.ramich.ramcrm.view;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import ru.ramich.ramcrm.R;
+import ru.ramich.ramcrm.model.DaoOrders;
 import ru.ramich.ramcrm.model.DaoProducts;
+import ru.ramich.ramcrm.model.Order;
 import ru.ramich.ramcrm.model.Product;
 
 public class ShopFragment extends Fragment {
 
+    View view;
+
     DaoProducts daoProducts;
+    DaoOrders daoOrders;
     ListView lvProducts;
     ProductsAdapter adapter;
     Button btnAddProduct;
@@ -33,16 +46,21 @@ public class ShopFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_shop, container, false);
+        view = inflater.inflate(R.layout.fragment_shop, container, false);
 
         daoProducts = new DaoProducts(getContext());
         daoProducts.open();
-        //daoProducts.createProducts();
+
+        daoOrders = new DaoOrders(getContext());
+        daoOrders.open();
+        /*daoOrders.dropOrders();
+        daoOrders.createOrders();*/
 
         btnAddProduct = view.findViewById(R.id.btnAddProduct);
         btnAddProduct.setOnClickListener(v -> showDialog());
 
         lvProducts = view.findViewById(R.id.lvProducts);
+        registerForContextMenu(lvProducts);
 
         return view;
     }
@@ -68,6 +86,7 @@ public class ShopFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         daoProducts.close();
+        daoOrders.close();
     }
 
     private void showDialog() {
@@ -97,5 +116,33 @@ public class ShopFragment extends Fragment {
                 .setNegativeButton("Cancel", (dialog, which) -> Toast.makeText(getContext(), "Cancel", Toast.LENGTH_SHORT).show());
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(Menu.NONE, R.id.make_order, Menu.NONE, R.string.make_order);
+        menu.add(Menu.NONE, R.id.details_product, Menu.NONE, R.string.details_product);
+        menu.add(Menu.NONE, R.id.delete_product, Menu.NONE, R.string.delete_product);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()){
+            case R.id.make_order:
+                Product product = (Product) adapter.getItem(acmi.position);
+                String currentDateTime = new SimpleDateFormat("dd.MM.yyyy")
+                        .format(System.currentTimeMillis());
+                daoOrders.addOrder(new Order(product.getName(), product.getCost(), currentDateTime));
+                return true;
+            case R.id.details_product:
+                Toast.makeText(getContext(), "Тут будут подробности!", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.delete_product:
+                Toast.makeText(getContext(), "Удаляем продукт!", Toast.LENGTH_LONG).show();
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 }

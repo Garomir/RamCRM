@@ -42,7 +42,7 @@ public class ProductsAdapter extends BaseAdapter {
         TextView txt1 = v.findViewById(R.id.tvNameProduct);
         TextView txt2 = v.findViewById(R.id.tvCostProduct);
         txt1.setText(products.get(position).getName());
-        txt2.setText(String.valueOf(products.get(position).getCost()));
+        txt2.setText(products.get(position).getCost() + " рублей");
         return v;
     }
 }

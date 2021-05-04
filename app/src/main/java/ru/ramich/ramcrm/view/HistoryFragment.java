@@ -10,25 +10,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import ru.ramich.ramcrm.R;
+import ru.ramich.ramcrm.model.DaoOrders;
+import ru.ramich.ramcrm.model.Order;
+import ru.ramich.ramcrm.model.Product;
 
 public class HistoryFragment extends Fragment {
 
     Button btnSetDate;
     TextView tvDate;
     Calendar calendar = Calendar.getInstance();
+    ListView lvOrders;
+    List<Order> orders = new ArrayList<>();
+    DaoOrders daoOrders;
+    OrdersAdapter ordersAdapter;
+    TextView tvSumma;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history, container, false);
+
+        tvSumma = view.findViewById(R.id.tvSumma);
+        daoOrders = new DaoOrders(getContext());
+        daoOrders.open();
 
         tvDate = view.findViewById(R.id.tvDate);
         btnSetDate = view.findViewById(R.id.btnSetDate);
@@ -46,7 +61,35 @@ public class HistoryFragment extends Fragment {
             dateDialog.show();
         });
 
+        lvOrders = view.findViewById(R.id.lvOrders);
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAllOrders();
+        getSumma();
+    }
+
+    public void getAllOrders(){
+        orders.clear();
+        orders = daoOrders.getAllOrders();
+        fillListView(orders);
+    }
+
+    public void fillListView(List<Order> ourList){
+        ordersAdapter = new OrdersAdapter(ourList);
+        lvOrders.setAdapter(ordersAdapter);
+    }
+
+    public void getSumma(){
+        int summa = 0;
+        for (Order o: orders) {
+            summa += o.getProductCost();
+        }
+        tvSumma.setText(summa + " рублей");
     }
 
     public void setTextView(){
@@ -54,5 +97,11 @@ public class HistoryFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         Date date = new Date(calendar.getTimeInMillis());
         tvDate.setText(sdf.format(date));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        daoOrders.close();
     }
 }

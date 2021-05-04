@@ -5,4 +5,8 @@
     <string name="add_product">Add Product</string>
     <string name="enter_name">Enter name!</string>
     <string name="enter_cost">Enter cost!</string>
+    <string name="make_order">Сделать заказ</string>
+    <string name="details_product">Подробности</string>
+    <string name="delete_product">Удалить</string>
+    <string name="viruchka">Выручка:</string>
 </resources>

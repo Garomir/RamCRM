@@ -11,8 +11,9 @@ public class Constants {
 
     public static final String TABLE_ORDERS = "orders";
     public static final String ID_ORDERS = "_id";
-    public static final String PRODUCT_ID_ORDERS = "product_id";
-    public static final String DATE_ORDERS = "datetime_order";
+    public static final String PRODUCT_NAME = "product_name";
+    public static final String PRODUCT_COST = "product_cost";
+    public static final String DATE_ORDERS = "date_order";
 
     public static final String CREATE_PRODUCTS = "create table "
             + TABLE_PRODUCTS + " ( "
@@ -23,7 +24,8 @@ public class Constants {
     public static final String CREATE_ORDERS = "create table "
             + TABLE_ORDERS + " ( "
             + ID_ORDERS + " integer primary key autoincrement, "
-            + PRODUCT_ID_ORDERS + " integer not null, "
+            + PRODUCT_NAME + " text not null,"
+            + PRODUCT_COST + " integer not null, "
             + DATE_ORDERS + " text not null" + ");";
 
     public static final String DROP_PRODUCTS = "drop table if exists " + TABLE_PRODUCTS + ";";

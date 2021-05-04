@@ -70,10 +70,10 @@ public class DaoProducts {
         return products;
     }
 
-    public void dropProducts(){
+    /*public void dropProducts(){
         sdb.execSQL(Constants.DROP_PRODUCTS);
     }
     public void createProducts(){
         sdb.execSQL(Constants.CREATE_PRODUCTS);
-    }
+    }*/
 }
