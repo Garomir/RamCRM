@@ -52,7 +52,8 @@ public class HistoryFragment extends Fragment {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                setTextView();
+                tvDate.setText(getDateString());
+                getOrdersByDate();
             };
             DatePickerDialog dateDialog = new DatePickerDialog(getContext(), dateSetListener,
                     calendar.get(Calendar.YEAR),
@@ -70,7 +71,7 @@ public class HistoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getAllOrders();
-        getSumma();
+        getSumma(orders);
     }
 
     public void getAllOrders(){
@@ -79,24 +80,35 @@ public class HistoryFragment extends Fragment {
         fillListView(orders);
     }
 
+    public void getOrdersByDate(){
+        List<Order> ordersByDate = new ArrayList<>();
+        for (Order o: orders) {
+            if (o.getCreationDate().equals(getDateString())){
+                ordersByDate.add(o);
+            }
+        }
+        fillListView(ordersByDate);
+        getSumma(ordersByDate);
+    }
+
     public void fillListView(List<Order> ourList){
         ordersAdapter = new OrdersAdapter(ourList);
         lvOrders.setAdapter(ordersAdapter);
     }
 
-    public void getSumma(){
+    public void getSumma(List<Order> fewOrders){
         int summa = 0;
-        for (Order o: orders) {
+        for (Order o: fewOrders) {
             summa += o.getProductCost();
         }
         tvSumma.setText(summa + " рублей");
     }
 
-    public void setTextView(){
+    public String getDateString(){
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         Date date = new Date(calendar.getTimeInMillis());
-        tvDate.setText(sdf.format(date));
+        return sdf.format(date);
     }
 
     @Override
