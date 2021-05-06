@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.history_id:
                         fragment = new HistoryFragment();
                         break;
+                    case R.id.chart_id:
+                        fragment = new ChartFragment();
+                        break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).commit();
 

@@ -7,6 +7,10 @@
         android:title="Shop" />
     <item
         android:id="@+id/history_id"
-        android:icon="@android:drawable/ic_menu_recent_history"
+        android:icon="@android:drawable/ic_menu_my_calendar"
         android:title="History" />
+    <item
+        android:id="@+id/chart_id"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        android:title="Chart" />
 </menu>
