@@ -55,7 +55,7 @@ public class ChartFragment extends Fragment {
         barChart.setScaleEnabled(false);
         legend = barChart.getLegend();
         legend.setEnabled(true);
-        legend.setForm(Legend.LegendForm.LINE);
+        legend.setForm(Legend.LegendForm.CIRCLE);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         legend.setOrientation(Legend.LegendOrientation.VERTICAL);
@@ -81,6 +81,7 @@ public class ChartFragment extends Fragment {
 
     public void getWeeklyOrders(){
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        int colorIndex = 0;
         for (int i = 0; i >= -6; i--) {
             int summaByDay = 0;
             c = Calendar.getInstance();
@@ -94,6 +95,7 @@ public class ChartFragment extends Fragment {
             }
             entries.add(new BarEntry(entryIndex, summaByDay));
             BarDataSet barDataSet = new BarDataSet(entries, str);
+            barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
             dataSets.add(barDataSet);
             entryIndex++;
         }
