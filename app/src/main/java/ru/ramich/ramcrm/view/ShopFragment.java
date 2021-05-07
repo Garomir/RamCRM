@@ -135,6 +135,7 @@ public class ShopFragment extends Fragment {
                 String currentDateTime = new SimpleDateFormat("dd.MM.yyyy")
                         .format(System.currentTimeMillis());
                 daoOrders.addOrder(new Order(product.getName(), product.getCost(), currentDateTime));
+                Toast.makeText(getContext(), "Заказ успешно выполнен!", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.details_product:
                 Toast.makeText(getContext(), "Тут будут подробности!", Toast.LENGTH_LONG).show();

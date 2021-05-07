@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -42,6 +43,8 @@ public class ChartFragment extends Fragment {
     List<BarEntry> entries = new ArrayList<>();
     List<IBarDataSet> dataSets = new ArrayList<>();
     Legend legend;
+    int[] legendColors = {Color.YELLOW, Color.GRAY, Color.RED, Color.BLACK, Color.BLUE, Color.GREEN, Color.MAGENTA};
+    String[] nameLabels = new String[7];
 
     int entryIndex = 1;
 
@@ -81,28 +84,41 @@ public class ChartFragment extends Fragment {
 
     public void getWeeklyOrders(){
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        int colorIndex = 0;
+        int labelIndex = 0;
         for (int i = 0; i >= -6; i--) {
             int summaByDay = 0;
             c = Calendar.getInstance();
             c.add(Calendar.DATE, i);
             Date date = c.getTime();
             String str = format.format(date);
+            nameLabels[labelIndex++] = str;
             for (Order o: orders) {
                 if (o.getCreationDate().equals(str)){
                     summaByDay += o.getProductCost();
                 }
             }
             entries.add(new BarEntry(entryIndex, summaByDay));
-            BarDataSet barDataSet = new BarDataSet(entries, str);
-            barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-            dataSets.add(barDataSet);
             entryIndex++;
         }
+        setLegendLabels();
+        BarDataSet barDataSet = new BarDataSet(entries, "Доход за неделю");
+        barDataSet.setColors(legendColors);
+        dataSets.add(barDataSet);
         BarData barData = new BarData(dataSets);
         barChart.setFitBars(true);
         barChart.animateY(2000);
         barChart.setData(barData);
+    }
+
+    public void setLegendLabels(){
+        LegendEntry[] legendEntries = new LegendEntry[7];
+        for (int i = 0; i<legendEntries.length; i++){
+            LegendEntry entry = new LegendEntry();
+            entry.formColor = legendColors[i];
+            entry.label = nameLabels[i];
+            legendEntries[i] = entry;
+        }
+        legend.setCustom(legendEntries);
     }
 
     @Override
