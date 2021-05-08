@@ -40,7 +40,7 @@ public class ShopFragment extends Fragment {
 
     DaoProducts daoProducts;
     DaoOrders daoOrders;
-    ListView lvProducts;
+    GridView gvProducts;
     ProductsAdapter adapter;
     Button btnAddProduct;
     List<Product> products = new ArrayList<>();
@@ -61,8 +61,8 @@ public class ShopFragment extends Fragment {
         btnAddProduct = view.findViewById(R.id.btnAddProduct);
         btnAddProduct.setOnClickListener(v -> showDialog());
 
-        lvProducts = view.findViewById(R.id.lvProducts);
-        registerForContextMenu(lvProducts);
+        gvProducts = view.findViewById(R.id.gvProducts);
+        registerForContextMenu(gvProducts);
 
         return view;
     }
@@ -81,7 +81,7 @@ public class ShopFragment extends Fragment {
 
     public void fillListView(List<Product> ourList){
         adapter = new ProductsAdapter(ourList);
-        lvProducts.setAdapter(adapter);
+        gvProducts.setAdapter(adapter);
     }
 
     @Override

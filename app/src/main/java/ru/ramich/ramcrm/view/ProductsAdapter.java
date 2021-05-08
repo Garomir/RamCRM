@@ -38,9 +38,12 @@ public class ProductsAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
-        if (v == null) v = View.inflate(parent.getContext(), R.layout.list_item_product, null);
-        TextView txt1 = v.findViewById(R.id.tvNameProduct);
-        TextView txt2 = v.findViewById(R.id.tvCostProduct);
+        //if (v == null) v = View.inflate(parent.getContext(), R.layout.list_item_product, null);
+        if (v == null) v = View.inflate(parent.getContext(), R.layout.grid_item_product, null);
+        //TextView txt1 = v.findViewById(R.id.tvNameProduct);
+        //TextView txt2 = v.findViewById(R.id.tvCostProduct);
+        TextView txt1 = v.findViewById(R.id.tvNameProductGrid);
+        TextView txt2 = v.findViewById(R.id.tvCostProductGrid);
         txt1.setText(products.get(position).getName());
         txt2.setText(products.get(position).getCost() + " рублей");
         return v;

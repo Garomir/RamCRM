@@ -14,10 +14,13 @@
         android:layout_gravity="center"
         android:text="@string/add_product" />
 
-    <ListView
-        android:id="@+id/lvProducts"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+    <GridView
+        android:id="@+id/gvProducts"
+        android:numColumns="2"
+        android:verticalSpacing="4dp"
+        android:horizontalSpacing="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stretchMode="columnWidth"/>
 
-    </ListView>
 </LinearLayout>
