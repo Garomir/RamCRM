@@ -12,6 +12,7 @@
         android:id="@+id/ivProduct"
         android:layout_width="match_parent"
         android:layout_height="265dp"
+        android:onClick="onSetImage"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
 
     <EditText

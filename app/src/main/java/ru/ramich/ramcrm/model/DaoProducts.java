@@ -48,7 +48,7 @@ public class DaoProducts {
     //READ_FROM_DB
     public List<Product> getAllProducts(){
         List<Product> products = new ArrayList<>();
-        String[] columns = {Constants.ID_PRODUCTS, Constants.NAME_PRODUCTS, Constants.COST_PRODUCTS};
+        String[] columns = {Constants.ID_PRODUCTS, Constants.NAME_PRODUCTS, Constants.COST_PRODUCTS, Constants.IMAGEPATH_PRODUCTS};
 
         Cursor c = sdb.query(
                 Constants.TABLE_PRODUCTS,
@@ -63,8 +63,9 @@ public class DaoProducts {
             int id = c.getInt(c.getColumnIndex(Constants.ID_PRODUCTS));
             String name = c.getString(c.getColumnIndex(Constants.NAME_PRODUCTS));
             int cost = c.getInt(c.getColumnIndex(Constants.COST_PRODUCTS));
+            String imagePath = c.getString(c.getColumnIndex(Constants.IMAGEPATH_PRODUCTS));
 
-            products.add(new Product(id, name, cost));
+            products.add(new Product(id, name, cost, imagePath));
         }
         c.close();
         return products;
@@ -80,7 +81,15 @@ public class DaoProducts {
         ContentValues cv = new ContentValues();
         cv.put(Constants.NAME_PRODUCTS, product.getName());
         cv.put(Constants.COST_PRODUCTS, product.getCost());
+        cv.put(Constants.IMAGEPATH_PRODUCTS, product.getImagePath());
         sdb.update(Constants.TABLE_PRODUCTS, cv, Constants.ID_PRODUCTS + "=?", new String[]{String.valueOf(product.getId())});
+    }
+
+    //Update image
+    public void updateImage(String imagePath, int id){
+        ContentValues cv = new ContentValues();
+        cv.put(Constants.IMAGEPATH_PRODUCTS, imagePath);
+        sdb.update(Constants.TABLE_PRODUCTS, cv, Constants.ID_PRODUCTS + "=?", new String[]{String.valueOf(id)});
     }
 
     /*public void dropProducts(){

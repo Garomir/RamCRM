@@ -8,6 +8,7 @@ public class Constants {
     public static final String ID_PRODUCTS = "_id";
     public static final String NAME_PRODUCTS = "name";
     public static final String COST_PRODUCTS = "cost";
+    public static final String IMAGEPATH_PRODUCTS = "image_path";
 
     public static final String TABLE_ORDERS = "orders";
     public static final String ID_ORDERS = "_id";
@@ -19,7 +20,8 @@ public class Constants {
             + TABLE_PRODUCTS + " ( "
             + ID_PRODUCTS + " integer primary key autoincrement, "
             + NAME_PRODUCTS + " text not null, "
-            + COST_PRODUCTS + " integer not null" + ");";
+            + COST_PRODUCTS + " integer not null, "
+            + IMAGEPATH_PRODUCTS + " text" + ");";
 
     public static final String CREATE_ORDERS = "create table "
             + TABLE_ORDERS + " ( "

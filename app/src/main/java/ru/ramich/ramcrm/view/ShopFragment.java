@@ -2,6 +2,8 @@ package ru.ramich.ramcrm.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -73,13 +75,13 @@ public class ShopFragment extends Fragment {
         getAllProducts();
     }
 
-    public void getAllProducts(){
+    public void getAllProducts() {
         products.clear();
         products = daoProducts.getAllProducts();
         fillListView(products);
     }
 
-    public void fillListView(List<Product> ourList){
+    public void fillListView(List<Product> ourList) {
         adapter = new ProductsAdapter(ourList);
         gvProducts.setAdapter(adapter);
     }
@@ -106,10 +108,10 @@ public class ShopFragment extends Fragment {
                     //Можно передавать строку в активити по нажатию
                     String someName = etName.getText().toString();
                     int someCost = Integer.parseInt(etCost.getText().toString());
-                    if (someName.length() == 0){
+                    if (someName.length() == 0) {
                         Toast.makeText(getContext(), "Enter the fields!", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (daoProducts.addProduct(new Product(someName, someCost))){
+                        if (daoProducts.addProduct(new Product(someName, someCost))) {
                             getAllProducts();
                             Toast.makeText(getContext(), "Product is added!", Toast.LENGTH_SHORT).show();
                         }
@@ -132,7 +134,7 @@ public class ShopFragment extends Fragment {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Product product = (Product) adapter.getItem(acmi.position);
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.make_order:
                 String currentDateTime = new SimpleDateFormat("dd.MM.yyyy")
                         .format(System.currentTimeMillis());
@@ -144,8 +146,8 @@ public class ShopFragment extends Fragment {
                 intent.putExtra("prodID", product.getId());
                 intent.putExtra("prodName", product.getName());
                 intent.putExtra("prodCost", product.getCost());
+                intent.putExtra("prodImage", product.getImagePath());
                 startActivity(intent);
-                Toast.makeText(getContext(), "Тут будут подробности!", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.delete_product:
                 daoProducts.deleteProduct(product.getId());
@@ -154,5 +156,14 @@ public class ShopFragment extends Fragment {
                 return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    public Bitmap getProductImage(String imagePath) {
+        if (imagePath == null || imagePath.length() == 0)
+            return (null);
+
+        Bitmap productImage = BitmapFactory.decodeFile(imagePath);
+
+        return (productImage);
     }
 }
