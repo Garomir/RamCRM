@@ -72,6 +72,11 @@ public class DaoOrders {
         return orders;
     }
 
+    //Delete From DB
+    public void deleteOrder(int id){
+        sdb.delete(Constants.TABLE_ORDERS, Constants.ID_ORDERS + "=?", new String[]{String.valueOf(id)});
+    }
+
     /*public void dropOrders(){
         sdb.execSQL(Constants.DROP_ORDERS);
     }

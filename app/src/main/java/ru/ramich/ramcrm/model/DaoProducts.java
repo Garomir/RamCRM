@@ -70,6 +70,19 @@ public class DaoProducts {
         return products;
     }
 
+    //Delete From DB
+    public void deleteProduct(int id){
+        sdb.delete(Constants.TABLE_PRODUCTS, Constants.ID_PRODUCTS + "=?", new String[]{String.valueOf(id)});
+    }
+
+    //Update Product
+    public void updateProduct(Product product){
+        ContentValues cv = new ContentValues();
+        cv.put(Constants.NAME_PRODUCTS, product.getName());
+        cv.put(Constants.COST_PRODUCTS, product.getCost());
+        sdb.update(Constants.TABLE_PRODUCTS, cv, Constants.ID_PRODUCTS + "=?", new String[]{String.valueOf(product.getId())});
+    }
+
     /*public void dropProducts(){
         sdb.execSQL(Constants.DROP_PRODUCTS);
     }

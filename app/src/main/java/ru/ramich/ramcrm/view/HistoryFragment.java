@@ -2,16 +2,24 @@ package ru.ramich.ramcrm.view;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,6 +71,7 @@ public class HistoryFragment extends Fragment {
         });
 
         lvOrders = view.findViewById(R.id.lvOrders);
+        registerForContextMenu(lvOrders);
 
         return view;
     }
@@ -115,5 +124,24 @@ public class HistoryFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         daoOrders.close();
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(Menu.NONE, R.id.delete_order, Menu.NONE, R.string.delete_order);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()){
+            case R.id.delete_order:
+                daoOrders.deleteOrder((int) ordersAdapter.getItemId(acmi.position));
+                getAllOrders();
+                Toast.makeText(getContext(), "Удаляем продукт!", Toast.LENGTH_LONG).show();
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 }

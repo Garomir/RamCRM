@@ -1,6 +1,7 @@
 package ru.ramich.ramcrm.view;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -129,18 +131,25 @@ public class ShopFragment extends Fragment {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Product product = (Product) adapter.getItem(acmi.position);
         switch (item.getItemId()){
             case R.id.make_order:
-                Product product = (Product) adapter.getItem(acmi.position);
                 String currentDateTime = new SimpleDateFormat("dd.MM.yyyy")
                         .format(System.currentTimeMillis());
                 daoOrders.addOrder(new Order(product.getName(), product.getCost(), currentDateTime));
                 Toast.makeText(getContext(), "Заказ успешно выполнен!", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.details_product:
+                Intent intent = new Intent(getContext(), DetailsProductActivity.class);
+                intent.putExtra("prodID", product.getId());
+                intent.putExtra("prodName", product.getName());
+                intent.putExtra("prodCost", product.getCost());
+                startActivity(intent);
                 Toast.makeText(getContext(), "Тут будут подробности!", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.delete_product:
+                daoProducts.deleteProduct(product.getId());
+                getAllProducts();
                 Toast.makeText(getContext(), "Удаляем продукт!", Toast.LENGTH_LONG).show();
                 return true;
         }

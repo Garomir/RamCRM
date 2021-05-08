@@ -10,4 +10,5 @@
     <string name="delete_product">Удалить</string>
     <string name="viruchka">Выручка:</string>
     <string name="all_time">За все время</string>
+    <string name="delete_order">Удалить</string>
 </resources>
