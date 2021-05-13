@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +45,13 @@ public class ShopFragment extends Fragment {
     DaoOrders daoOrders;
     GridView gvProducts;
     ProductsAdapter adapter;
-    Button btnAddProduct;
     List<Product> products = new ArrayList<>();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,11 +63,6 @@ public class ShopFragment extends Fragment {
 
         daoOrders = new DaoOrders(getContext());
         daoOrders.open();
-        /*daoOrders.dropOrders();
-        daoOrders.createOrders();*/
-
-        btnAddProduct = view.findViewById(R.id.btnAddProduct);
-        btnAddProduct.setOnClickListener(v -> showDialog());
 
         gvProducts = view.findViewById(R.id.gvProducts);
         registerForContextMenu(gvProducts);
@@ -73,6 +74,22 @@ public class ShopFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getAllProducts();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.shop_option_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_add_product:
+                showDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void getAllProducts() {
@@ -156,14 +173,5 @@ public class ShopFragment extends Fragment {
                 return true;
         }
         return super.onContextItemSelected(item);
-    }
-
-    public Bitmap getProductImage(String imagePath) {
-        if (imagePath == null || imagePath.length() == 0)
-            return (null);
-
-        Bitmap productImage = BitmapFactory.decodeFile(imagePath);
-
-        return (productImage);
     }
 }

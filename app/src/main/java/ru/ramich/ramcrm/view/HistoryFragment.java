@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,6 @@ import ru.ramich.ramcrm.model.Product;
 
 public class HistoryFragment extends Fragment {
 
-    Button btnSetDate;
     TextView tvDate;
     Calendar calendar = Calendar.getInstance();
     ListView lvOrders;
@@ -42,6 +42,12 @@ public class HistoryFragment extends Fragment {
     DaoOrders daoOrders;
     OrdersAdapter ordersAdapter;
     TextView tvSumma;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,21 +60,6 @@ public class HistoryFragment extends Fragment {
         daoOrders.open();
 
         tvDate = view.findViewById(R.id.tvDate);
-        btnSetDate = view.findViewById(R.id.btnSetDate);
-        btnSetDate.setOnClickListener(v -> {
-            DatePickerDialog.OnDateSetListener dateSetListener = (view1, year, month, dayOfMonth) -> {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                tvDate.setText(getDateString());
-                getOrdersByDate();
-            };
-            DatePickerDialog dateDialog = new DatePickerDialog(getContext(), dateSetListener,
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH));
-            dateDialog.show();
-        });
 
         lvOrders = view.findViewById(R.id.lvOrders);
         registerForContextMenu(lvOrders);
@@ -143,5 +134,37 @@ public class HistoryFragment extends Fragment {
                 return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.history_option_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_date:
+                getDate();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void getDate(){
+        DatePickerDialog.OnDateSetListener dateSetListener = (view1, year, month, dayOfMonth) -> {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            tvDate.setText(getDateString());
+            getOrdersByDate();
+        };
+        DatePickerDialog dateDialog = new DatePickerDialog(getContext(), dateSetListener,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+        dateDialog.show();
     }
 }

@@ -11,4 +11,6 @@
     <string name="viruchka">Выручка:</string>
     <string name="all_time">За все время</string>
     <string name="delete_order">Удалить</string>
+    <string name="item_add_product">Add</string>
+    <string name="date">Date</string>
 </resources>
