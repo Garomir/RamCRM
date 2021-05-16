@@ -69,27 +69,37 @@ public class DetailsProductActivity extends AppCompatActivity {
         if (etNameProduct.getText().length() == 0 || etCostProduct.getText().length() == 0){
             Toast.makeText(this, "Поля не могут быть пустыми!", Toast.LENGTH_LONG).show();
         } else {
-            updateReportPicture(productID, bitmap);
-            Product product = new Product(
-                    productID,
-                    etNameProduct.getText().toString(),
-                    Integer.parseInt(String.valueOf(etCostProduct.getText())),
-                    productImagePath);
-            daoProducts.updateProduct(product);
-            finish();
+            if (productID > 0){
+                updateProductPicture(productID, bitmap);
+                Product product = new Product(
+                        productID,
+                        etNameProduct.getText().toString(),
+                        Integer.parseInt(String.valueOf(etCostProduct.getText())),
+                        productImagePath);
+                daoProducts.updateProduct(product);
+                finish();
+            } else {
+                updateProductPicture(productID, bitmap);
+                Product product = new Product(
+                        etNameProduct.getText().toString(),
+                        Integer.parseInt(String.valueOf(etCostProduct.getText())),
+                        productImagePath);
+                daoProducts.addProduct(product);
+                finish();
+            }
         }
     }
 
-    public void updateReportPicture(int productID, Bitmap picture) {
-        // Saves the new picture to the internal storage with the unique identifier of the report as
+    public void updateProductPicture(int productID, Bitmap picture) {
+        // Saves the new picture to the internal storage with the unique identifier of the product as
         // the name. That way, there will never be two report pictures with the same name.
         File internalStorage = this.getDir("ReportPictures", Context.MODE_PRIVATE);
-        File reportFilePath = new File(internalStorage, productID + ".png");
-        productImagePath = reportFilePath.toString();
+        File productFilePath = new File(internalStorage, System.currentTimeMillis() + ".png");
+        productImagePath = productFilePath.toString();
 
         FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream(reportFilePath);
+            fos = new FileOutputStream(productFilePath);
             picture.compress(Bitmap.CompressFormat.PNG, 100 /*quality*/, fos);
             fos.close();
         }
@@ -97,17 +107,13 @@ public class DetailsProductActivity extends AppCompatActivity {
             Log.i("DATABASE", "Problem updating picture", ex);
             productImagePath = "";
         }
-
-        daoProducts.updateImage(productImagePath, productID);
     }
 
     public Bitmap getProductImage() {
         if (productImagePath == null || productImagePath.length() == 0)
             return (null);
 
-        Bitmap productImage = BitmapFactory.decodeFile(productImagePath);
-
-        return (productImage);
+        return (BitmapFactory.decodeFile(productImagePath));
     }
 
     @Override

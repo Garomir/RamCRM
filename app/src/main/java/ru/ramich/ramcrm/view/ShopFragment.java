@@ -85,7 +85,8 @@ public class ShopFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_add_product:
-                showDialog();
+                Intent intent = new Intent(getContext(), DetailsProductActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -108,35 +109,6 @@ public class ShopFragment extends Fragment {
         super.onDestroy();
         daoProducts.close();
         daoOrders.close();
-    }
-
-    private void showDialog() {
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View dialogView = inflater.inflate(R.layout.dialog, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setView(dialogView);
-
-        final EditText etName = dialogView.findViewById(R.id.etName);
-        final EditText etCost = dialogView.findViewById(R.id.etCost);
-
-        builder
-                .setPositiveButton("Add", (dialog, which) -> {
-                    //Можно передавать строку в активити по нажатию
-                    String someName = etName.getText().toString();
-                    int someCost = Integer.parseInt(etCost.getText().toString());
-                    if (someName.length() == 0) {
-                        Toast.makeText(getContext(), "Enter the fields!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (daoProducts.addProduct(new Product(someName, someCost))) {
-                            getAllProducts();
-                            Toast.makeText(getContext(), "Product is added!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                })
-                .setNegativeButton("Cancel", (dialog, which) -> Toast.makeText(getContext(), "Cancel", Toast.LENGTH_SHORT).show());
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
 
     @Override

@@ -34,6 +34,7 @@ public class DaoProducts {
             ContentValues cv = new ContentValues();
             cv.put(Constants.NAME_PRODUCTS, product.getName());
             cv.put(Constants.COST_PRODUCTS, product.getCost());
+            cv.put(Constants.IMAGEPATH_PRODUCTS, product.getImagePath());
 
             long result = sdb.insert(Constants.TABLE_PRODUCTS, null, cv);
             if (result > 0) {
