@@ -4,7 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_product">Add Product</string>
     <string name="enter_name">Enter name!</string>
-    <string name="enter_cost">Enter cost!</string>
     <string name="make_order">Сделать заказ</string>
     <string name="details_product">Подробности</string>
     <string name="delete_product">Удалить</string>
@@ -13,4 +12,7 @@
     <string name="delete_order">Удалить</string>
     <string name="item_add_product">Add</string>
     <string name="date">Date</string>
+    <string name="add_client">Add client</string>
+    <string name="select_client">Выберите клиента</string>
+    <string name="enter_phone">Enter phone!</string>
 </resources>

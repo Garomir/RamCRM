@@ -12,7 +12,8 @@
         android:roundIcon="@drawable/icon1"
         android:supportsRtl="true"
         android:theme="@style/Theme.RamCRM">
-        <activity android:name=".view.DetailsProductActivity"></activity>
+        <activity android:name=".view.SelectClientActivity"></activity>
+        <activity android:name=".view.DetailsProductActivity" />
         <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

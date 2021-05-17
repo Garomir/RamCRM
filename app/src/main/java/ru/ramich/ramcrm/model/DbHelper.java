@@ -14,6 +14,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(Constants.CREATE_CLIENTS);
         db.execSQL(Constants.CREATE_PRODUCTS);
         db.execSQL(Constants.CREATE_ORDERS);
     }
@@ -22,6 +23,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(Constants.DROP_PRODUCTS);
         db.execSQL(Constants.DROP_ORDERS);
+        db.execSQL(Constants.DROP_CLIENTS);
         onCreate(db);
     }
 }

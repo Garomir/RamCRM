@@ -22,6 +22,24 @@
         android:gravity="right" />
 
     <TextView
+        android:id="@+id/tvClientNameOrd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        android:gravity="right" />
+
+    <TextView
+        android:id="@+id/tvClientPhoneOrd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        android:gravity="right" />
+
+    <TextView
         android:id="@+id/tvCreationDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

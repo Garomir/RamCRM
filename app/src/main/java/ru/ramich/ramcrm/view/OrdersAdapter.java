@@ -41,10 +41,14 @@ public class OrdersAdapter extends BaseAdapter {
         if (v == null) v = View.inflate(parent.getContext(), R.layout.list_item_order, null);
         TextView txt1 = v.findViewById(R.id.tvProductName);
         TextView txt2 = v.findViewById(R.id.tvProductCost);
-        TextView txt3 = v.findViewById(R.id.tvCreationDate);
+        TextView txt3 = v.findViewById(R.id.tvClientNameOrd);
+        TextView txt4 = v.findViewById(R.id.tvClientPhoneOrd);
+        TextView txt5 = v.findViewById(R.id.tvCreationDate);
         txt1.setText(orders.get(position).getProductName());
         txt2.setText(orders.get(position).getProductCost() + " рублей");
-        txt3.setText(orders.get(position).getCreationDate());
+        txt3.setText(orders.get(position).getClientName());
+        txt4.setText(orders.get(position).getClientPhone());
+        txt5.setText(orders.get(position).getCreationDate());
         return v;
     }
 }

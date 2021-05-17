@@ -1,5 +1,6 @@
 package ru.ramich.ramcrm.view;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,7 +9,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.ContextMenu;
@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.zip.Inflater;
 
 import ru.ramich.ramcrm.R;
+import ru.ramich.ramcrm.model.Client;
+import ru.ramich.ramcrm.model.DaoClients;
 import ru.ramich.ramcrm.model.DaoOrders;
 import ru.ramich.ramcrm.model.DaoProducts;
 import ru.ramich.ramcrm.model.Order;
@@ -40,7 +42,7 @@ import ru.ramich.ramcrm.model.Product;
 public class ShopFragment extends Fragment {
 
     View view;
-
+    String clientName, clientPhone;
     DaoProducts daoProducts;
     DaoOrders daoOrders;
     GridView gvProducts;
@@ -125,18 +127,20 @@ public class ShopFragment extends Fragment {
         Product product = (Product) adapter.getItem(acmi.position);
         switch (item.getItemId()) {
             case R.id.make_order:
+                Intent intent = new Intent(getContext(), SelectClientActivity.class);
+                startActivityForResult(intent, 1);
                 String currentDateTime = new SimpleDateFormat("dd.MM.yyyy")
                         .format(System.currentTimeMillis());
-                daoOrders.addOrder(new Order(product.getName(), product.getCost(), currentDateTime));
+                daoOrders.addOrder(new Order(product.getName(), product.getCost(), clientName, clientPhone, currentDateTime));
                 Toast.makeText(getContext(), "Заказ успешно выполнен!", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.details_product:
-                Intent intent = new Intent(getContext(), DetailsProductActivity.class);
-                intent.putExtra("prodID", product.getId());
-                intent.putExtra("prodName", product.getName());
-                intent.putExtra("prodCost", product.getCost());
-                intent.putExtra("prodImage", product.getImagePath());
-                startActivity(intent);
+                Intent intent2 = new Intent(getContext(), DetailsProductActivity.class);
+                intent2.putExtra("prodID", product.getId());
+                intent2.putExtra("prodName", product.getName());
+                intent2.putExtra("prodCost", product.getCost());
+                intent2.putExtra("prodImage", product.getImagePath());
+                startActivity(intent2);
                 return true;
             case R.id.delete_product:
                 daoProducts.deleteProduct(product.getId());
@@ -145,5 +149,14 @@ public class ShopFragment extends Fragment {
                 return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (data == null){
+            return;
+        }
+        clientName = data.getStringExtra("name");
+        clientPhone = data.getStringExtra("phone");
     }
 }
