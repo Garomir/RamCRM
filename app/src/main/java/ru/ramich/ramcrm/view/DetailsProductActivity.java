@@ -2,10 +2,8 @@ package ru.ramich.ramcrm.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -23,7 +21,6 @@ import java.io.IOException;
 
 import ru.ramich.ramcrm.R;
 import ru.ramich.ramcrm.model.DaoProducts;
-import ru.ramich.ramcrm.model.DbHelper;
 import ru.ramich.ramcrm.model.Product;
 
 public class DetailsProductActivity extends AppCompatActivity {

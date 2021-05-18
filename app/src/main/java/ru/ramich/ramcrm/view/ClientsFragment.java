@@ -1,7 +1,6 @@
 package ru.ramich.ramcrm.view;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,7 +25,6 @@ import java.util.List;
 import ru.ramich.ramcrm.R;
 import ru.ramich.ramcrm.model.Client;
 import ru.ramich.ramcrm.model.DaoClients;
-import ru.ramich.ramcrm.model.Product;
 
 public class ClientsFragment extends Fragment {
 

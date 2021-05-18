@@ -1,10 +1,6 @@
 package ru.ramich.ramcrm.view;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,30 +15,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import ru.ramich.ramcrm.R;
-import ru.ramich.ramcrm.model.Client;
-import ru.ramich.ramcrm.model.DaoClients;
 import ru.ramich.ramcrm.model.DaoOrders;
 import ru.ramich.ramcrm.model.DaoProducts;
-import ru.ramich.ramcrm.model.Order;
 import ru.ramich.ramcrm.model.Product;
 
 public class ShopFragment extends Fragment {
 
     View view;
-    String clientName, clientPhone;
     DaoProducts daoProducts;
     DaoOrders daoOrders;
     GridView gvProducts;
@@ -128,11 +114,9 @@ public class ShopFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.make_order:
                 Intent intent = new Intent(getContext(), SelectClientActivity.class);
-                startActivityForResult(intent, 1);
-                String currentDateTime = new SimpleDateFormat("dd.MM.yyyy")
-                        .format(System.currentTimeMillis());
-                daoOrders.addOrder(new Order(product.getName(), product.getCost(), clientName, clientPhone, currentDateTime));
-                Toast.makeText(getContext(), "Заказ успешно выполнен!", Toast.LENGTH_LONG).show();
+                intent.putExtra("name", product.getName());
+                intent.putExtra("cost", product.getCost());
+                startActivity(intent);
                 return true;
             case R.id.details_product:
                 Intent intent2 = new Intent(getContext(), DetailsProductActivity.class);
@@ -149,14 +133,5 @@ public class ShopFragment extends Fragment {
                 return true;
         }
         return super.onContextItemSelected(item);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (data == null){
-            return;
-        }
-        clientName = data.getStringExtra("name");
-        clientPhone = data.getStringExtra("phone");
     }
 }

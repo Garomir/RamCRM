@@ -2,7 +2,6 @@ package ru.ramich.ramcrm.view;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +29,6 @@ import java.util.List;
 import ru.ramich.ramcrm.R;
 import ru.ramich.ramcrm.model.DaoOrders;
 import ru.ramich.ramcrm.model.Order;
-import ru.ramich.ramcrm.model.Product;
 
 public class HistoryFragment extends Fragment {
 
