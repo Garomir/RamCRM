@@ -12,10 +12,12 @@ public class Constants {
 
     public static final String TABLE_ORDERS = "orders";
     public static final String ID_ORDERS = "_id";
-    public static final String PRODUCT_NAME = "product_name";
+    public static final String PRODUCT_ID = "product_id";
+    public static final String CLIENT_ID = "client_id";
+    /*public static final String PRODUCT_NAME = "product_name";
     public static final String PRODUCT_COST = "product_cost";
     public static final String CLIENT_NAME = "client_name";
-    public static final String CLIENT_PHONE = "client_phone";
+    public static final String CLIENT_PHONE = "client_phone";*/
     public static final String DATE_ORDERS = "date_order";
 
     public static final String TABLE_CLIENTS = "clients";
@@ -33,10 +35,12 @@ public class Constants {
     public static final String CREATE_ORDERS = "create table "
             + TABLE_ORDERS + " ( "
             + ID_ORDERS + " integer primary key autoincrement, "
-            + PRODUCT_NAME + " text not null,"
+            + PRODUCT_ID + " integer not null, "
+            + CLIENT_ID + " integer not null, "
+            /*+ PRODUCT_NAME + " text not null,"
             + PRODUCT_COST + " integer not null, "
             + CLIENT_NAME + " text not null,"
-            + CLIENT_PHONE + " text not null,"
+            + CLIENT_PHONE + " text not null,"*/
             + DATE_ORDERS + " text not null" + ");";
 
     public static final String CREATE_CLIENTS = "create table "

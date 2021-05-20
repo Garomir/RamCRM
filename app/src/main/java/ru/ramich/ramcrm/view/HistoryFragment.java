@@ -27,8 +27,12 @@ import java.util.Date;
 import java.util.List;
 
 import ru.ramich.ramcrm.R;
+import ru.ramich.ramcrm.model.Client;
+import ru.ramich.ramcrm.model.DaoClients;
 import ru.ramich.ramcrm.model.DaoOrders;
+import ru.ramich.ramcrm.model.DaoProducts;
 import ru.ramich.ramcrm.model.Order;
+import ru.ramich.ramcrm.model.Product;
 
 public class HistoryFragment extends Fragment {
 
@@ -36,7 +40,11 @@ public class HistoryFragment extends Fragment {
     Calendar calendar = Calendar.getInstance();
     ListView lvOrders;
     List<Order> orders = new ArrayList<>();
+    List<Product> products = new ArrayList<>();
+    List<Client> clients = new ArrayList<>();
     DaoOrders daoOrders;
+    DaoProducts daoProducts;
+    DaoClients daoClients;
     OrdersAdapter ordersAdapter;
     TextView tvSumma;
 
@@ -55,6 +63,16 @@ public class HistoryFragment extends Fragment {
         tvSumma = view.findViewById(R.id.tvSumma);
         daoOrders = new DaoOrders(getContext());
         daoOrders.open();
+
+        daoProducts = new DaoProducts(getContext());
+        daoProducts.open();
+        products.clear();
+        products = daoProducts.getAllProducts();
+
+        daoClients = new DaoClients(getContext());
+        daoClients.open();
+        clients.clear();
+        clients = daoClients.getAllClients();
 
         tvDate = view.findViewById(R.id.tvDate);
 
@@ -88,15 +106,20 @@ public class HistoryFragment extends Fragment {
         getSumma(ordersByDate);
     }
 
-    public void fillListView(List<Order> ourList){
-        ordersAdapter = new OrdersAdapter(ourList);
+    public void fillListView(List<Order> orders){
+        ordersAdapter = new OrdersAdapter(orders, products, clients);
         lvOrders.setAdapter(ordersAdapter);
     }
 
     public void getSumma(List<Order> fewOrders){
         int summa = 0;
         for (Order o: fewOrders) {
-            summa += o.getProductCost();
+            for (Product p: products) {
+                if (p.getId() == o.getProductId()){
+                    summa += p.getCost();
+                }
+            }
+            //summa += o.getProductCost();
         }
         tvSumma.setText(summa + " рублей");
     }
@@ -112,6 +135,8 @@ public class HistoryFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         daoOrders.close();
+        daoProducts.close();
+        daoClients.close();
     }
 
     @Override

@@ -93,10 +93,10 @@ public class DaoProducts {
         sdb.update(Constants.TABLE_PRODUCTS, cv, Constants.ID_PRODUCTS + "=?", new String[]{String.valueOf(id)});
     }
 
-    /*public void dropProducts(){
+    public void dropProducts(){
         sdb.execSQL(Constants.DROP_PRODUCTS);
     }
     public void createProducts(){
         sdb.execSQL(Constants.CREATE_PRODUCTS);
-    }*/
+    }
 }

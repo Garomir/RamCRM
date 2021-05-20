@@ -5,29 +5,27 @@ import java.util.Date;
 public class Order {
 
     private int id;
-    private String productName;
+    private int productId;
+    private int clientId;
+    /*private String productName;
     private int productCost;
     private String clientName;
-    private String clientPhone;
+    private String clientPhone;*/
     private String creationDate;
 
     public Order() {
     }
 
-    public Order(String productName, int productCost, String clientName, String clientPhone, String creationDate) {
-        this.productName = productName;
-        this.productCost = productCost;
-        this.clientName = clientName;
-        this.clientPhone = clientPhone;
+    public Order(int productId, int clientId, String creationDate) {
+        this.productId = productId;
+        this.clientId = clientId;
         this.creationDate = creationDate;
     }
 
-    public Order(int id, String productName, int productCost, String clientName, String clientPhone, String creationDate) {
+    public Order(int id, int productId, int clientId, String creationDate) {
         this.id = id;
-        this.productName = productName;
-        this.productCost = productCost;
-        this.clientName = clientName;
-        this.clientPhone = clientPhone;
+        this.productId = productId;
+        this.clientId = clientId;
         this.creationDate = creationDate;
     }
 
@@ -39,22 +37,6 @@ public class Order {
         this.id = id;
     }
 
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public int getProductCost() {
-        return productCost;
-    }
-
-    public void setProductCost(int productCost) {
-        this.productCost = productCost;
-    }
-
     public String getCreationDate() {
         return creationDate;
     }
@@ -63,19 +45,19 @@ public class Order {
         this.creationDate = creationDate;
     }
 
-    public String getClientName() {
-        return clientName;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public String getClientPhone() {
-        return clientPhone;
+    public int getClientId() {
+        return clientId;
     }
 
-    public void setClientPhone(String clientPhone) {
-        this.clientPhone = clientPhone;
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
     }
 }

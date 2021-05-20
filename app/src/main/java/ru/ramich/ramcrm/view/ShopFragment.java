@@ -114,8 +114,7 @@ public class ShopFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.make_order:
                 Intent intent = new Intent(getContext(), SelectClientActivity.class);
-                intent.putExtra("name", product.getName());
-                intent.putExtra("cost", product.getCost());
+                intent.putExtra("productId", product.getId());
                 startActivity(intent);
                 return true;
             case R.id.details_product:

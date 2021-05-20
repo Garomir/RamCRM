@@ -83,11 +83,11 @@ public class DaoClients {
         sdb.update(Constants.TABLE_CLIENTS, cv, Constants.ID_CLIENTS + "=?", new String[]{String.valueOf(client.getId())});
     }
 
-    /*public void dropClients(){
+    public void dropClients(){
         sdb.execSQL(Constants.DROP_CLIENTS);
     }
 
     public void createClients(){
         sdb.execSQL(Constants.CREATE_CLIENTS);
-    }*/
+    }
 }

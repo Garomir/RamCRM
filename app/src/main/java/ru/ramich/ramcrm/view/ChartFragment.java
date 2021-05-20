@@ -25,12 +25,16 @@ import java.util.List;
 
 import ru.ramich.ramcrm.R;
 import ru.ramich.ramcrm.model.DaoOrders;
+import ru.ramich.ramcrm.model.DaoProducts;
 import ru.ramich.ramcrm.model.Order;
+import ru.ramich.ramcrm.model.Product;
 
 public class ChartFragment extends Fragment {
 
     DaoOrders daoOrders;
+    DaoProducts daoProducts;
     List<Order> orders = new ArrayList<>();
+    List<Product> products = new ArrayList<>();
     List<Integer> weeklyOrders = new ArrayList<>();
     Calendar c;
     BarChart barChart;
@@ -61,6 +65,10 @@ public class ChartFragment extends Fragment {
         daoOrders = new DaoOrders(getContext());
         daoOrders.open();
 
+        daoProducts = new DaoProducts(getContext());
+        daoProducts.open();
+        products = daoProducts.getAllProducts();
+
         return view;
     }
 
@@ -88,7 +96,12 @@ public class ChartFragment extends Fragment {
             nameLabels[labelIndex++] = str;
             for (Order o: orders) {
                 if (o.getCreationDate().equals(str)){
-                    summaByDay += o.getProductCost();
+                    for (Product p: products) {
+                        if (p.getId() == o.getProductId()){
+                            summaByDay += p.getCost();
+                        }
+                    }
+                    //summaByDay += o.getProductCost();
                 }
             }
             entries.add(new BarEntry(entryIndex, summaByDay));
