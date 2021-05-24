@@ -49,11 +49,37 @@ public class OrdersAdapter extends BaseAdapter {
         TextView txt3 = v.findViewById(R.id.tvClientNameOrd);
         TextView txt4 = v.findViewById(R.id.tvClientPhoneOrd);
         TextView txt5 = v.findViewById(R.id.tvCreationDate);
-        txt1.setText(products.get(position).getName());
-        txt2.setText(products.get(position).getCost() + " рублей");
-        txt3.setText(clients.get(position).getName());
-        txt4.setText(clients.get(position).getPhone());
+        //txt1.setText(products.get(position).getName());
+        txt1.setText(getProd(position).getName());
+        //txt2.setText(products.get(position).getCost() + " рублей");
+        txt2.setText(getProd(position).getCost() + " рублей");
+        //txt3.setText(clients.get(position).getName());
+        txt3.setText(getClient(position).getName());
+        //txt4.setText(clients.get(position).getPhone());
+        txt4.setText(getClient(position).getPhone());
         txt5.setText(orders.get(position).getCreationDate());
         return v;
+    }
+
+    public Product getProd(int position){
+        int i = orders.get(position).getProductId();
+        Product prod = null;
+        for (Product p: products) {
+            if (p.getId() == i){
+                prod = p;
+            }
+        }
+        return prod;
+    }
+
+    public Client getClient(int position){
+        int i = orders.get(position).getClientId();
+        Client client = null;
+        for (Client c: clients) {
+            if (c.getId() == i){
+                client = c;
+            }
+        }
+        return client;
     }
 }

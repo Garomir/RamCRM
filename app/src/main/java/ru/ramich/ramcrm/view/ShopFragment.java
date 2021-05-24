@@ -54,6 +54,9 @@ public class ShopFragment extends Fragment {
 
         gvProducts = view.findViewById(R.id.gvProducts);
         registerForContextMenu(gvProducts);
+        gvProducts.setOnItemClickListener((parent, view, position, id) -> {
+            Toast.makeText(getContext(), "" + adapter.getItemId(position), Toast.LENGTH_LONG).show();
+        });
 
         return view;
     }

@@ -48,10 +48,10 @@ public class SelectClientActivity extends AppCompatActivity {
         lvClientSelect.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Client client = (Client) clientsAdapter.getItem(position);
+                int clientId = (int) clientsAdapter.getItemId(position);
                 String currentDateTime = new SimpleDateFormat("dd.MM.yyyy")
                         .format(System.currentTimeMillis());
-                daoOrders.addOrder(new Order(productId, client.getId(), currentDateTime));
+                daoOrders.addOrder(new Order(productId, clientId, currentDateTime));
                 Toast.makeText(getApplicationContext(), "Заказ успешно выполнен!", Toast.LENGTH_LONG).show();
                 finish();
             }

@@ -78,6 +78,9 @@ public class HistoryFragment extends Fragment {
 
         lvOrders = view.findViewById(R.id.lvOrders);
         registerForContextMenu(lvOrders);
+        lvOrders.setOnItemClickListener((parent, view1, position, id) -> {
+            Toast.makeText(getContext(), "" + ordersAdapter.getItemId(position), Toast.LENGTH_LONG).show();
+        });
 
         return view;
     }

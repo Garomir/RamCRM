@@ -49,6 +49,7 @@ public class ClientsFragment extends Fragment {
 
         lvClients = view.findViewById(R.id.lvClients);
         registerForContextMenu(lvClients);
+        lvClients.setOnItemClickListener((parent, view1, position, id) -> Toast.makeText(getContext(), "" + clientsAdapter.getItemId(position), Toast.LENGTH_LONG).show());
 
         return view;
     }
@@ -65,8 +66,8 @@ public class ClientsFragment extends Fragment {
         fillListView(clients);
     }
 
-    public void fillListView(List<Client> ourList) {
-        clientsAdapter = new ClientsAdapter(ourList);
+    public void fillListView(List<Client> clients) {
+        clientsAdapter = new ClientsAdapter(clients);
         lvClients.setAdapter(clientsAdapter);
     }
 
