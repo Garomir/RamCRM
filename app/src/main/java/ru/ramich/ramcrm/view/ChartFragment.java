@@ -35,7 +35,6 @@ public class ChartFragment extends Fragment {
     DaoProducts daoProducts;
     List<Order> orders = new ArrayList<>();
     List<Product> products = new ArrayList<>();
-    List<Integer> weeklyOrders = new ArrayList<>();
     Calendar c;
     BarChart barChart;
     List<BarEntry> entries = new ArrayList<>();
@@ -96,12 +95,7 @@ public class ChartFragment extends Fragment {
             nameLabels[labelIndex++] = str;
             for (Order o: orders) {
                 if (o.getCreationDate().equals(str)){
-                    for (Product p: products) {
-                        if (p.getId() == o.getProductId()){
-                            summaByDay += p.getCost();
-                        }
-                    }
-                    //summaByDay += o.getProductCost();
+                    summaByDay += o.getProductCost();
                 }
             }
             entries.add(new BarEntry(entryIndex, summaByDay));

@@ -32,8 +32,10 @@ public class DaoOrders {
     public boolean addOrder(Order order){
         try {
             ContentValues cv = new ContentValues();
-            cv.put(Constants.PRODUCT_ID, order.getProductId());
-            cv.put(Constants.CLIENT_ID, order.getClientId());
+            cv.put(Constants.PRODUCT_NAME, order.getProductName());
+            cv.put(Constants.PRODUCT_COST, order.getProductCost());
+            cv.put(Constants.CLIENT_NAME, order.getClientName());
+            cv.put(Constants.CLIENT_PHONE, order.getClientPhone());
             cv.put(Constants.DATE_ORDERS, order.getCreationDate());
 
             long result = sdb.insert(Constants.TABLE_ORDERS, null, cv);
@@ -49,7 +51,13 @@ public class DaoOrders {
     //READ_FROM_DB
     public List<Order> getAllOrders(){
         List<Order> orders = new ArrayList<>();
-        String[] columns = {Constants.ID_ORDERS, Constants.PRODUCT_ID, Constants.CLIENT_ID, Constants.DATE_ORDERS};
+        String[] columns = {
+                Constants.ID_ORDERS,
+                Constants.PRODUCT_NAME,
+                Constants.PRODUCT_COST,
+                Constants.CLIENT_NAME,
+                Constants.CLIENT_PHONE,
+                Constants.DATE_ORDERS};
 
         Cursor c = sdb.query(
                 Constants.TABLE_ORDERS,
@@ -62,11 +70,13 @@ public class DaoOrders {
 
         while (c.moveToNext()){
             int id = c.getInt(c.getColumnIndex(Constants.ID_ORDERS));
-            int productId = c.getInt(c.getColumnIndex(Constants.PRODUCT_ID));
-            int clientId = c.getInt(c.getColumnIndex(Constants.CLIENT_ID));
+            String productName = c.getString(c.getColumnIndex(Constants.PRODUCT_NAME));
+            int productCost = c.getInt(c.getColumnIndex(Constants.PRODUCT_COST));
+            String clientName = c.getString(c.getColumnIndex(Constants.CLIENT_NAME));
+            String clientPhone = c.getString(c.getColumnIndex(Constants.CLIENT_PHONE));
             String date = c.getString(c.getColumnIndex(Constants.DATE_ORDERS));
 
-            orders.add(new Order(id, productId, clientId, date));
+            orders.add(new Order(id, productName, productCost, clientName, clientPhone, date));
         }
         c.close();
         return orders;

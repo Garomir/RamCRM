@@ -26,7 +26,8 @@ public class SelectClientActivity extends AppCompatActivity {
     DaoOrders daoOrders;
     List<Client> clients = new ArrayList<>();
     ClientsAdapter clientsAdapter;
-    int productId;
+    String productName;
+    int productCost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +42,18 @@ public class SelectClientActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null){
-            productId = extras.getInt("productId");
+            productName = extras.getString("productName");
+            productCost = extras.getInt("productCost");
         }
 
         lvClientSelect = findViewById(R.id.lvClientsSelect);
         lvClientSelect.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int clientId = (int) clientsAdapter.getItemId(position);
+                Client client = (Client) clientsAdapter.getItem(position);
                 String currentDateTime = new SimpleDateFormat("dd.MM.yyyy")
                         .format(System.currentTimeMillis());
-                daoOrders.addOrder(new Order(productId, clientId, currentDateTime));
+                daoOrders.addOrder(new Order(productName, productCost, client.getName(), client.getPhone(), currentDateTime));
                 Toast.makeText(getApplicationContext(), "Заказ успешно выполнен!", Toast.LENGTH_LONG).show();
                 finish();
             }

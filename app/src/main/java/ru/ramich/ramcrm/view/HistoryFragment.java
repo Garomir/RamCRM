@@ -89,7 +89,7 @@ public class HistoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getAllOrders();
-        getSumma(orders);
+        getSumma();
     }
 
     public void getAllOrders(){
@@ -106,23 +106,18 @@ public class HistoryFragment extends Fragment {
             }
         }
         fillListView(ordersByDate);
-        getSumma(ordersByDate);
+        getSumma();
     }
 
     public void fillListView(List<Order> orders){
-        ordersAdapter = new OrdersAdapter(orders, products, clients);
+        ordersAdapter = new OrdersAdapter(orders);
         lvOrders.setAdapter(ordersAdapter);
     }
 
-    public void getSumma(List<Order> fewOrders){
+    public void getSumma(){
         int summa = 0;
-        for (Order o: fewOrders) {
-            for (Product p: products) {
-                if (p.getId() == o.getProductId()){
-                    summa += p.getCost();
-                }
-            }
-            //summa += o.getProductCost();
+        for (Order o: orders) {
+            summa += o.getProductCost();
         }
         tvSumma.setText(summa + " рублей");
     }

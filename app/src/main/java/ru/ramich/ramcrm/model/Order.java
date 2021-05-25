@@ -5,27 +5,31 @@ import java.util.Date;
 public class Order {
 
     private int id;
-    private int productId;
-    private int clientId;
-    /*private String productName;
+    /*private int productId;
+    private int clientId;*/
+    private String productName;
     private int productCost;
     private String clientName;
-    private String clientPhone;*/
+    private String clientPhone;
     private String creationDate;
 
     public Order() {
     }
 
-    public Order(int productId, int clientId, String creationDate) {
-        this.productId = productId;
-        this.clientId = clientId;
+    public Order(String productName, int productCost, String clientName, String clientPhone, String creationDate) {
+        this.productName = productName;
+        this.productCost = productCost;
+        this.clientName = clientName;
+        this.clientPhone = clientPhone;
         this.creationDate = creationDate;
     }
 
-    public Order(int id, int productId, int clientId, String creationDate) {
+    public Order(int id, String productName, int productCost, String clientName, String clientPhone, String creationDate) {
         this.id = id;
-        this.productId = productId;
-        this.clientId = clientId;
+        this.productName = productName;
+        this.productCost = productCost;
+        this.clientName = clientName;
+        this.clientPhone = clientPhone;
         this.creationDate = creationDate;
     }
 
@@ -45,19 +49,35 @@ public class Order {
         this.creationDate = creationDate;
     }
 
-    public int getProductId() {
-        return productId;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public int getClientId() {
-        return clientId;
+    public int getProductCost() {
+        return productCost;
     }
 
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
+    public void setProductCost(int productCost) {
+        this.productCost = productCost;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getClientPhone() {
+        return clientPhone;
+    }
+
+    public void setClientPhone(String clientPhone) {
+        this.clientPhone = clientPhone;
     }
 }
